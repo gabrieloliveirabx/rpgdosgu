@@ -96,8 +96,9 @@ while True:
     match opcao:
         case 1:
             if chance_critica == 1 or chance_critica == 2:
-                ataque = ataque * 2
-                vida_boss -= ataque
+                dano = ataque
+                dano *= 2
+                vida_boss -= dano
                 print(f"Voce conseguiu um ATAQUE CRITICO!\nVoce causou {ataque} de dano, vida restante do boss: {vida_boss}.\n")
             else:
                 vida_boss -= ataque
@@ -109,10 +110,13 @@ while True:
                 vida_boss = 0
         case 2:
             ataque_boss_defendido = ataque_boss / 2
-            vida -= ataque_boss
+            vida -= ataque_boss_defendido
             print(f"O boss atacou voce causando {ataque_boss_defendido}.\nVoce se defendeu!\nDano recebido: {ataque_boss_defendido}\nVida restante: {vida}.\n")  
         case 3:
-            qtde_pocao -= 1
+            if qtde_pocao > 0:
+                qtde_pocao -= 1
+            else:
+                print("Voce nao possui pocoes!")
             if vida + 30 > vida_max:
                 cura = vida_max - vida
                 vida += cura
@@ -124,7 +128,11 @@ while True:
         case _:
             print("Opcao invalida!\n")
                 
-    if vida <= 0 or vida_boss <= 0:
+    if vida <= 0:
+        print("Voce morreu!")
+        break
+
+    if vida_boss <= 0:
         print(f"Parabéns, voce derrotou o boss!\nVida restante: {vida}\n")
         break 
 
